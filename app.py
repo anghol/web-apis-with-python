@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 # Intitialise the app
 app = Flask(__name__)
@@ -12,9 +12,9 @@ def index():
     if not fname and not lname:
         response = jsonify({"status": "error"})
     elif fname and not lname:
-        response = jsonify({"data": f"Hello, {fname}!"})
+        response = jsonify({"status": "success", "data": f"Hello, {fname}!"})
     elif lname and not fname:
-        response = jsonify({"data": f"Hello, Mr. {lname}!"})
+        response = jsonify({"status": "success", "data": f"Hello, Mr. {lname}!"})
     else:
-        response = jsonify({"data": f"Is your name {fname} {lname}?"})
-    return response
+        response = jsonify({"status": "success", "data": f"Is your name {fname} {lname}?"})
+    return render_template('index.html', response=response)
