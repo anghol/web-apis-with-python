@@ -11,5 +11,11 @@ def apply_filter(file: object, filter: str) -> object:
     4. Convert the PIL Image object to file object
     5. Return the file object
     """
+    image = Image.open(file)
+    image = image.filter(eval(f'ImageFilter.{filter.upper()}'))
+    
+    file = io.BytesIO()  # empty buffer in memory
+    image.save(file, 'JPEG')  # pass the pointer to the buffer
+    file.seek(0)
 
-    pass
+    return file
